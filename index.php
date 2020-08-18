@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <!--    Slick CSS-->
-    <link rel="stylesheet" type="text/css" href="css/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
-
-
     <title>Food Park</title>
 
 <!-- Style -->
@@ -119,14 +114,6 @@
  
 <!-- Items Slider -->
 
-<!--   Slider     -->
-          <div class="aslider-class multiple-items">
-            <div>your content</div>
-            <div>your content</div>
-            <div>your content</div>
-          </div>
-        
-        <!--   Slider     -->
 
 <!--Main row start-->
 <div class="row">
@@ -301,25 +288,10 @@
     
 </div>
      <!-- Optional JavaScript -->
-<!--  Slick Slider -->
+
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-   <script type="text/javascript" src="js/slick.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-          $('.aslider-class').slick({
-            setting-name: setting-value
-          });
-        });
-        
-        $('.multiple-items').slick({
-          infinite: true,
-          slidesToShow: 3,
-          slidesToScroll: 3
-        });
-    </script>
-
-<!--  Slick Slider -->
+  
     
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
