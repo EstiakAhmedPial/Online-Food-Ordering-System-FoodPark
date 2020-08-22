@@ -1,0 +1,2 @@
+# Online-Food-Ordering-System-FoodPark
+Online Food Ordering System is a system in which one can order various foods and beverages from some local restaurant and hotels through the use of internet, just by sitting at home or any place. And the order is delivered to the told location. The main plan is to make a very cost-effective site for local businesses and let them easily maintain their online sales.
