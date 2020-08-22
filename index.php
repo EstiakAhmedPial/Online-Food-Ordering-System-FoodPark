@@ -14,18 +14,8 @@
 <!-- Style -->
 <style type="text/css">
 
-
-
-
-
-
-
-
-
 </style>
 <!-- Style -->
-
-
 
   </head>
   <body >
