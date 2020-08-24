@@ -1,255 +1,325 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php session_start();
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  //$con= mysqli_connect("localhost","root","","foodpark");
+//session_destroy(); 
+$item_array= array();
 
-    <title>Food Park</title>
+if (filter_input(INPUT_POST, 'order')) {
+    if (isset($_SESSION['cart'])) {
+      $count= count($_SESSION['cart']);
+      print_r($count);
+      $item_array = array_column($_SESSION['cart'], 'id');
+      print_r($item_array);
+      if(!in_array(filter_input(INPUT_GET, 'id'), $item_array)){
+        $_SESSION['cart'][$count]=array(
+            'sl' => filter_input(INPUT_GET, 'id'),
+            'item_name'=>filter_input(INPUT_POST, 'item_name'),
+            'item_price'=>filter_input(INPUT_POST, 'item_price'),
+            'item_quantity'=>filter_input(INPUT_POST, 'item_quantity')
+        );
+      }
+      else{
+        for ($i=0;$i<$count($item_array);$i++){
+          if ($item_array[$i]==filter_input(INPUT_GET, 'id')) {
+            //add item quantity to products
+            $_SESSION['cart'][$i]['item_quantity']+= filter_input(INPUT_POST, 'item_quantity');
+          }
+        }
+      }
 
-<!-- Style -->
-<style type="text/css">
+    }
+    else{
+      //if Cart dosent exist
+      $_SESSION['cart'][0]=array(
+            'sl' => filter_input(INPUT_GET, 'id'),
+            'item_name'=>filter_input(INPUT_POST, 'item_name'),
+            'item_price'=>filter_input(INPUT_POST, 'item_price'),
+            'item_quantity'=>filter_input(INPUT_POST, 'item_quantity')
+      );
+    }
+  }
+pre_r($_SESSION);
 
-</style>
-<!-- Style -->
+function pre_r($array){
+  echo "<pre>";
+  print_r($array);
+  echo "</pre>";
+}
 
-  </head>
-  <body >
-  <div class="container">
-      
-<!--  NAV Menu Bar -->
+            
+//   if(isset($_POST["add"])){
+//     if (isset($_SESSION["cart"])) {
 
-   <div class="row container-fluid">
-      <div class="col">
-           <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
-              <a class="navbar-brand" href="#">
-                  <h2>
-                      <em>Food Park</em>
-                  </h2>
-              </a>
-              
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              
-                  <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav mr-auto">
-                      <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                      </li>
-                    </ul>
-                    
-                    <span class="navbar-text " style="">
-                      Order Online Your Favourite Food
-                    </span>
-                  </div>
-            </nav>
-      </div>
-   </div>
+//       $item_array_id = array_column($_SESSION["cart"],"sl");
+//       if (!in_array($_GET["sl"], $item_array_id)) {
+//         $count= count($_SESSION["cart"]);
+//         $item_array= array(
+//                             'sl' => $_GET["sl"],
+//                             'item_name' => $_POST["hidden_name"],
+//                             'item_price' => $_POST["hidden_price"],
+//                             'item_quantity' => $_POST["item_quantity"]  
+//                           );
+//         $_SESSION["cart"][$count]=$item_array;
+//         echo '<script >window.location="index.php"</script>';
+//       }else {
 
-<!--  NAV Menu Bar -->
+//         echo '<script >alert("Product is already in cart")</script>';
+//         echo '<script >window.location="index.php"</script>';
 
-   
+
+//       }
+//     }else{
+//          $item_array= array(
+//                             'sl' => $_GET["sl"],
+//                             'item_name' => $_POST["hidden_name"],
+//                             'item_price' => $_POST["hidden_price"],
+//                             'item_quantity' => $_POST["item_quantity"]  
+//                           );
+//          $_SESSION["cart"][0]=$item_array; 
+//     }
+//   }
+
+
+
+ ?>
+<!-- Header          ========= -->
+<?php include 'header.php'; ?>
 <!--   Header Ends     -->
    
  
    
 <!--     body   -->
 
-
-<div class="row">
-  <br>
-  <!-- Empty Space -->
-</div>
-
-<!-- Items Slider -->
-  <div class="row">
-    <div class="col">
-      
-        <div class="row">
-          
-    <!--      ITEMS        -->
-<!--
-            <div class="col-md-2">
-              <div class="card border-warning text-center" style="width: 95%;  ">
-                <img src="img/biriany-1.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                <div class="card-body">
-                  <h6 class="card-title">Chicken Biriany</h6>
-                  <span class="badge badge-danger">Price: 100 TK</span>
-
-                  <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-warning">Order it</a>
-                </div>
-              </div>
-            </div>
--->
-    <!--      ITEMS        -->
-
-
-
-          </div>
-        </div>
-
-    </div>
- 
-<!-- Items Slider -->
-
-
-<!--Main row start-->
-<div class="row">
-    <div class="col-md-9 col-sm-9 border border-warning">
-        
-    </div>    
-    
-    <div class="col-md-3 col-sm-3 border border-warning ">
-        
-    </div>     
-                
-</div>
-<!--Main row End-->
-<!-- Flicker Slide -->
-
-      <div class="yourElement border border-warning "><!-- Main container -->
-
-        <div class="fcontainer row"><!-- Flickable elements container (required) -->
-          <div class="fcontainerInner "><!-- (required) -->
-            
-            <div id="1" class="item col-md-4">
-              <!--      ITEMS        -->
-                
-                  <div class="card border-warning text-center" style="width: 95%;  ">
-                    <img src="img/biriany-1.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Chicken Biriany</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-                
-              <!--      ITEMS        -->
-            </div><!-- must have `item' for class name -->
-            
-            <div id="2" class="item col-md-4">
-              <!--      ITEMS        -->
-               
-                  <div class="card border-warning text-center" style="width: 95%; ">
-                    <img src="img/pizza-3.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Item pizza-3</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-            
-              <!--      ITEMS        -->
-            </div>
-            
-            <div id="3" class="item col-md-4">
-              <!--      ITEMS        -->
-                
-                  <div class="card border-warning text-center" style="width: 95%;   ;">
-                    <img src="img/biriany-Mutton.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Mutton biriany</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-                
-            <!--      ITEMS        -->
-           </div> 
-          
-          <div id="4" class="item col-md-4">
-              <!--      ITEMS        -->
-                
-                  <div class="card border-warning text-center" style="width: 95%;  ">
-                    <img src="img/avocado-bun-burgers-11a.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Avocado Bun Burgers</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-                
-              <!--      ITEMS        -->
-        </div><!-- must have `item' for class name -->
-            
-            <div id="5" class="item col-md-4">
-              <!--      ITEMS        -->
-               
-                  <div class="card border-warning text-center" style="width: 95%; ">
-                    <img src="img/spicy-chicken-burgers-3.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Spicy Chicken Burgers</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-            
-              <!--      ITEMS        -->
-            </div>
-            <div id="6" class="item col-md-4">
-              <!--      ITEMS        -->
-                
-                  <div class="card border-warning text-center" style="width: 95%;   ;">
-                    <img src="img/dd7822b4b7802ced3651044d13b51a36.jpg" class="card-img-top" alt="..." style="height: 180px;">
-                    <div class="card-body">
-                      <h6 class="card-title">Mutton burger</h6>
-                      <span class="badge badge-danger">Price: 100 TK</span>
-                      <p class="card-text font-weight-lighter">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-warning">Order it</a>
-                    </div>
-                  </div>
-                </div>
-    <!--      ITEMS        -->
-            </div>  
-        </div>
-    
-
-        <div class="row">
-          <div class="col-md-10 ">
-            <div class="nav "><!-- Tab, indicator or something like that (optional) -->
-              <ul class="list list-inline text-center">
-                <li class="list-inline-item"><a class="text-decoration-none" href="#1" >&#9679;</a></li>
-                <li class="list-inline-item"><a class="text-decoration-none" href="#2">&#9679;</a></li>
-                <li class="list-inline-item"><a class="text-decoration-none" href="#3">&#9679;</a></li>
-                <li class="list-inline-item"><a class="text-decoration-none" href="#4">&#9679;</a></li>
-                <li class="list-inline-item"><a class="text-decoration-none" href="#5">&#9679;</a></li>
-                <li class="list-inline-item"><a class="text-decoration-none" href="#6">&#9679;</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="arrows"><!-- Next and prev buttons (optional) -->
-                  <span class="prev float-left badge badge-danger">Previous</span><!-- must have `prev' for className -->
-                  <span class="next float-right badge badge-danger">Next </span><!-- must have `next' for className -->
-                </div>
-            </div>
-        </div><br>
+<!-- Modal Button -->
+ <!-- Button trigger modal -->
+      <div class="" style="margin-top: 100px;">
         
       </div>
+        <button type="button" class="btn btn-success fixed-bottom " style="" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 100px;">
+          <h5 class="text-white">View Cart</h5>
+        </button>
+<!-- Modal Button -->
+
+
+<div class="row " style="margin: 10px; padding: 10px;">
+
+         <!-- /* Empty Space*/ -->
+        <!-- Button trigger modal -->
+        <!-- <button type="button" class="btn btn-warning" style="" data-toggle="modal" data-target="#exampleModalCenter">
+          <h5 class="text-white">View Cart</h5>
+        </button>
+ -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Your Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                
+
+                <!-- ----------------------------------CART---------------------- -->
+                  <table class="table table-hover table-dark">
+                        <thead>
+                          <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col"> X </th>
+                          </tr>
+                        </thead>
+
+                    <!-- Fetch Cart Items Dynamically -->
+                    <?php 
+                      if(!empty($_SESSION["cart"])){
+                        $total=0;
+                        foreach ($_SESSION["cart"] as $key => $value) {
+                        ?>
+                        <!-- Fetch Cart Items Dynamically -->
+
+                        <tbody>
+                          <tr>
+                            <th scope="row"></th>
+                            <td><?php echo $value["item_name"]; ?></td>
+                            <td><?php echo $value["item_price"]; ?> BDT</td>
+                            <td><?php echo $value["item_quantity"]; ?></td>
+                            <td><?php echo number_format(($value["item_quantity"]*$value["item_price"]), 2);?></td>
+                            <td><a href ="index.php?action=delete&id=<?php echo $value["sl"]; ?>"><span class="badge-danger"> X </span></a></td>
+                          </tr>
+                       
+
+                          <?php 
+                            $total= $total+($value["item_quantity"]*$value["item_price"]);
+                           ?>
+                          
+                        <!-- Fetch Cart Items Dynamically -->
+                    <?php 
+                        }
+
+
+                      }
+
+                    ?>
+                    <tr>
+                            <th scope="row">Total</th>
+                            <th scope="row text-left"><?php echo number_format($total,2); ?></th>
+                          </tr>
+                    <!-- Fetch Cart Items Dynamically -->
+                         </tbody>
+                      </table>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Order More !</button>
+                <button type="button" class="btn btn-success">Checkout</button>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =======================================
+                   master row
+====================================== -->
+<div class="row">
+ <!-- =======================================
+                   master row
+====================================== -->
+
+
+
+        <!-- ------------Collumn 2-------------- -->
+        <div class="col-md-12 col-sm-12">
+          <!-- ------------Collumn 2-------------- -->
+
+
+
+
+      <!-- 
+      ========================================
+                Display Porducts
+      ========================================= 
+      -->
+       
+           <div class="row">
+             
+
+           <?php 
+
+            $con= mysqli_connect("localhost","root","","foodpark");
+            $query= "SELECT*FROM item ORDER BY sl ASC";
+            $result= mysqli_query($con, $query);
+            $num_rows=mysqli_num_rows($result);
+
+            
+            if ($num_rows > 0){
+              while ($row = mysqli_fetch_assoc($result)){
+              
+
+
+              //Fetch Array Start: Items
+          ?>
+
+
+            <div class="col-md-3 col-sm-3">
+              <form method="post" action="index.php?action=add&id=<?php echo $row['sl'];?>">
+                <!--      ITEMS        -->
+                      
+                        <div class="card border-warning text-center" style="width: 80%; height: 20%;  ">
+                          <img src="<?php echo $row['item_img']; ?>" class="card-img-top" alt="..." style="height: 180px;">
+                          <div class="card-body">
+                            <h6 class="card-title"><?php echo $row['item_name']; ?></h6>
+                            <span class="badge badge-danger">Price: <?php echo $row['item_price']; ?> TK</span>
+                            <!--   //<p class="card-text font-weight-lighter"><?php echo $row['sl']; ?></p> -->
+                            <p class="card-text font-weight-lighter"><?php echo $row['item_des']; ?></p>
+
+                            
+                            <!-- Name -->
+                            <input type="hidden" name="item_name" class="form-control" value="<?php echo $row['item_name']; ?>">
+
+                            <!-- Price -->
+                            <input type="hidden" name="item_price"class="form-control" value="<?php echo $row['item_price']; ?>" style="margin: 8px; width: 20px;">
+                            <!-- // Product Quantity -->
+                            <input type="text" name="item_quantity" class="form-control" value="1">
+
+
+                            <!-- Submit Button -->
+                            <input type="submit" name="order" class="btn btn-warning text-white" value="Order it" style="margin: 8px;">
+
+                            
+                          </div>
+                        </div>
+                      
+                    <!--      ITEMS        -->
+                
+              </form>
+              
+            </div>
+
+
+
+           <?php
+                //Fetch Array End
+                };
+              };
+
+          ?>
+
+           </div> 
+
+      <!-- 
+      ========================================
+        Display Porducts Ends
+      ========================================= 
+      -->
+
+
+          <!-- ------------Collumn 2-------------- -->
+        </div>
+        <!-- ------------Collumn 2-------------- -->
+
+
+
+
+        <!-- ------------Collumn 1-------------- -->
+        <!-- <div class="col-md-3 bg-warning text-white"> -->
+          <!-- ------------Collumn 1-------------- -
+
+          
+            </div>   -->
+
+          <!-- ------------Collumn 1-------------- -
+        </div>
+        - ------------Collumn 1-------------- -->
+         
+            <!-- ----------------------------------------------------------------------- -->
+
+
+
+
+<!-- =======================================
+                   master row
+====================================== -->
+
+</div>
+
+<!-- =======================================
+  master row
+====================================== -->
+
+
+
     
-<!-- Flicker Slide-->
 
 
 
@@ -263,39 +333,4 @@
     
     
 <!--    Footer Starts   -->
-   <div class="row justify-content-center bg-warning " style="margin-top: 10px;">
-    <div class="col-md-4">
-            
-                
-            <p class="h6 " style="color:#fcfcf9; ">2020 &copy;Copyright all rights reserved. <a href="#">ID-123</a> </p>
-                
-            
-        </div>
-    </div>
-
-    <!-- Optional JavaScript -->
-    
-    
-</div>
-     <!-- Optional JavaScript -->
-
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  
-    
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    
-      <script src="./js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="./js/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-
-    
-    
-
-  </body>
-</html>
+<?php include 'footer.php'; ?>
