@@ -1,16 +1,24 @@
-<?php session_start();
+<?php 
 
+session_start();
+//clearcart
+
+if (filter_input(INPUT_POST, 'clearcart')) {
+  //session_destroy();
+  session_unset();
+}
   //$con= mysqli_connect("localhost","root","","foodpark");
-//session_destroy(); 
+ 
 $item_array= array();
 
 if (filter_input(INPUT_POST, 'order')) {
     if (isset($_SESSION['cart'])) {
       $count= count($_SESSION['cart']);
-      print_r($count);
-      $item_array = array_column($_SESSION['cart'], 'id');
-      print_r($item_array);
-      if(!in_array(filter_input(INPUT_GET, 'id'), $item_array)){
+      
+      $item_array = array_column($_SESSION['cart'], 'sl');
+       
+      if(!in_array(filter_input(INPUT_GET, 'id'), $item_array))
+      {
         $_SESSION['cart'][$count]=array(
             'sl' => filter_input(INPUT_GET, 'id'),
             'item_name'=>filter_input(INPUT_POST, 'item_name'),
@@ -18,11 +26,11 @@ if (filter_input(INPUT_POST, 'order')) {
             'item_quantity'=>filter_input(INPUT_POST, 'item_quantity')
         );
       }
-      else{
-        for ($i=0;$i<$count($item_array);$i++){
-          if ($item_array[$i]==filter_input(INPUT_GET, 'id')) {
+      else{// CHK duplicacy of items
+        for ($i = 0; $i < count($item_array); $i++){
+          if ($item_array[$i]==filter_input(INPUT_GET,'id')) {
             //add item quantity to products
-            $_SESSION['cart'][$i]['item_quantity']+= filter_input(INPUT_POST, 'item_quantity');
+            $_SESSION['cart'][$i]['item_quantity'] += filter_input(INPUT_POST,'item_quantity');
           }
         }
       }
@@ -38,49 +46,28 @@ if (filter_input(INPUT_POST, 'order')) {
       );
     }
   }
-pre_r($_SESSION);
 
-function pre_r($array){
-  echo "<pre>";
-  print_r($array);
-  echo "</pre>";
-}
+  //delete item from cart========================
+  if (isset($_GET["action"])) {
+    if ($_GET["action"]=="delete") {
+      foreach ($_SESSION['cart'] as $key => $value) {
+        if ($value['sl']==$_GET['id']) {
+          unset($_SESSION['cart'][$key]);
+          echo '<script>alert("Product is removed")</script>';
+          echo '<script>window.location="index.php")</script>';
+        }
+      }
+    }
+  }
+// pre_r($_SESSION);
 
-            
-//   if(isset($_POST["add"])){
-//     if (isset($_SESSION["cart"])) {
+// function pre_r($array){
+//   echo "<pre>";
+//   print_r($array);
+//   echo "</pre>";
+// }
 
-//       $item_array_id = array_column($_SESSION["cart"],"sl");
-//       if (!in_array($_GET["sl"], $item_array_id)) {
-//         $count= count($_SESSION["cart"]);
-//         $item_array= array(
-//                             'sl' => $_GET["sl"],
-//                             'item_name' => $_POST["hidden_name"],
-//                             'item_price' => $_POST["hidden_price"],
-//                             'item_quantity' => $_POST["item_quantity"]  
-//                           );
-//         $_SESSION["cart"][$count]=$item_array;
-//         echo '<script >window.location="index.php"</script>';
-//       }else {
-
-//         echo '<script >alert("Product is already in cart")</script>';
-//         echo '<script >window.location="index.php"</script>';
-
-
-//       }
-//     }else{
-//          $item_array= array(
-//                             'sl' => $_GET["sl"],
-//                             'item_name' => $_POST["hidden_name"],
-//                             'item_price' => $_POST["hidden_price"],
-//                             'item_quantity' => $_POST["item_quantity"]  
-//                           );
-//          $_SESSION["cart"][0]=$item_array; 
-//     }
-//   }
-
-
-
+ 
  ?>
 <!-- Header          ========= -->
 <?php include 'header.php'; ?>
@@ -96,19 +83,14 @@ function pre_r($array){
         
       </div>
         <button type="button" class="btn btn-success fixed-bottom " style="" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 100px;">
-          <h5 class="text-white">View Cart</h5>
+          <h5 class="text-white"> View Cart </h5>
         </button>
 <!-- Modal Button -->
 
 
 <div class="row " style="margin: 10px; padding: 10px;">
 
-         <!-- /* Empty Space*/ -->
-        <!-- Button trigger modal -->
-        <!-- <button type="button" class="btn btn-warning" style="" data-toggle="modal" data-target="#exampleModalCenter">
-          <h5 class="text-white">View Cart</h5>
-        </button>
- -->
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -136,32 +118,37 @@ function pre_r($array){
                         </thead>
 
                     <!-- Fetch Cart Items Dynamically -->
-                    <?php 
+                    <?php
+                    $total=0; 
                       if(!empty($_SESSION["cart"])){
-                        $total=0;
+                        
+                        $cartno=1;// for counting item no
                         foreach ($_SESSION["cart"] as $key => $value) {
+                          
                         ?>
                         <!-- Fetch Cart Items Dynamically -->
 
                         <tbody>
                           <tr>
-                            <th scope="row"></th>
-                            <td><?php echo $value["item_name"]; ?></td>
-                            <td><?php echo $value["item_price"]; ?> BDT</td>
-                            <td><?php echo $value["item_quantity"]; ?></td>
-                            <td><?php echo number_format(($value["item_quantity"]*$value["item_price"]), 2);?></td>
-                            <td><a href ="index.php?action=delete&id=<?php echo $value["sl"]; ?>"><span class="badge-danger"> X </span></a></td>
+                            <th scope="row"><?php echo $cartno; ?></th>
+                            <td><?php echo $value['item_name']; ?></td>
+                            <td><?php echo $value['item_price']; ?> BDT</td>
+                            <td><?php echo $value['item_quantity']; ?></td>
+                            <td><?php echo number_format(($value['item_quantity']*$value['item_price']), 2);?></td>
+                            <td><a href ="index.php?action=delete&id=<?php echo $value['sl']; ?>"><span class="badge-danger">  X  </span></a></td>
                           </tr>
                        
 
                           <?php 
-                            $total= $total+($value["item_quantity"]*$value["item_price"]);
+                            $total= $total+($value['item_quantity']*$value['item_price']);
                            ?>
                           
                         <!-- Fetch Cart Items Dynamically -->
                     <?php 
-                        }
+                       $cartno+=1;
 
+                        }
+                        
 
                       }
 
@@ -177,7 +164,23 @@ function pre_r($array){
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Order More !</button>
-                <button type="button" class="btn btn-success">Checkout</button>
+                
+                <form method="post" action="checkout.php">
+                <!-- Clear Cart Button -->
+
+                  <input type="submit" name="clearcart" class="btn btn-success text-white" value="Checkout" style="margin: 8px;">
+
+                </form>
+               <!--  <button type="button" class="btn btn-success">Checkout</button> -->
+                
+                <!-- Form -->
+                <form method="post" action="index.php">
+                <!-- Clear Cart Button -->
+
+                  <input type="submit" name="clearcart" class="btn btn-warning text-white" value="Clear Cart" style="margin: 8px;">
+
+                </form>
+
               </div>
             </div>
           </div>
