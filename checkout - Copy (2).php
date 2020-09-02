@@ -217,8 +217,8 @@ function pre_r($array){
 }
 
 
-// pre_r($_SESSION['cart'][1]['item_name']);
-// pre_r($_SESSION['cart'][1]['item_quantity']);
+pre_r($_SESSION['cart'][1]['item_name']);
+pre_r($_SESSION['cart'][1]['item_quantity']);
 
 
 
@@ -236,27 +236,50 @@ function pre_r($array){
 
 
 //generating Invoice ID
-$invoice_id_tstmp= date('ymd');
-$invoice_id_tstmp1= date('h');
+$invoice_id_tstmp= date('Ymd');
+$invoice_id_tstmp1= date('his');
 
-$invoice_id=$invoice_id_tstmp.$invoice_id_tstmp1.("786").rand(1,78699);
+$invoice_id=$invoice_id_tstmp.("07860").$invoice_id_tstmp1;
 //generating Invoice ID
-// print_r($invoice_id);
 
-//  echo " Matha Kharap   :::  ";
-//  $count= count($_SESSION['cart']);
-// // echo "count =".$count;
-//  for ($i=0; $i <$count ; $i++) { 
+//print_r($invoice_id);
+// echo ";||   ||invoice_id =".$invoice_id."  :;";
+//$_SESSION["cart"] 
+// echo "foreach //";
+// 		for ($i=0; $i < 40 ; $i++) { 
+// 			foreach ($_SESSION['cart'][$i] as $key => $value) {
+// 				$k[]= $key;
+// 				$v[]= " '".$value. "' ";
+// 			}
+// 			//$i=$i++;
+			
+// 			}
+// 		//$k=implode(", ", $k);
+// 		$v=implode(", ", $v);
+		
+// foreach ($_SESSION['cart'][0] as $key => $value) {
+// 				$k[]= $key;
+// 				//$v[]= " '".$value. "' ";
+// 			}
+// 		$k=implode(", ", $k);
+// echo $k."  |v= ".$v;
+// pre_r($k);
+
+// pre_r($v);
+ echo " Matha Kharap   :::  ";
+ $count= count($_SESSION['cart']);
+// echo "count =".$count;
+ for ($i=0; $i <$count ; $i++) { 
  	
-//  	$sl =$_SESSION['cart'][$i]['sl'];
-//  	$item_name=$_SESSION['cart'][$i]['item_name'];
-//  	$item_price=$_SESSION['cart'][$i]['item_price'];
-//  	$item_quantity=$_SESSION['cart'][$i]['item_quantity'];
-//  	$item_total=($_SESSION['cart'][$i]['item_price']*$_SESSION['cart'][$i]['item_quantity']);
-//  	echo "  ||  ";
-//  	echo "invoice_id".$invoice_id."  NO. ".($i+1)."sl:  ".$inv_itemsl." Name : ".$inv_itname."  Price : ".$inv_itemprice."  Quantity : ".$inv_itemquantity."  Total: ".$item_total;
+ 	$sl =$_SESSION['cart'][$i]['sl'];
+ 	$item_name=$_SESSION['cart'][$i]['item_name'];
+ 	$item_price=$_SESSION['cart'][$i]['item_price'];
+ 	$item_quantity=$_SESSION['cart'][$i]['item_quantity'];
+ 	$item_total=($_SESSION['cart'][$i]['item_price']*$_SESSION['cart'][$i]['item_quantity']);
+ 	echo "  ||  ";
+ 	echo "invoice_id".$invoice_id."  NO. ".($i+1)."sl:  ".$inv_itemsl." Name : ".$inv_itname."  Price : ".$inv_itemprice."  Quantity : ".$inv_itemquantity."  Total: ".$item_total;
 
-//  	echo "  ||  ";
+ 	echo "  ||  ";
 
 				//$insertdb="INSERT INTO inv_orders(inv_id, inv_cartno, sl, item_name, item_price, item_quantity, item_total)VALUES ('$invoice_id', '$nv_cartno', '$sl', '$item_name', '$item_price', '$item_quantity', '$item_total')";
 				// if(mysqli_query($connect, $insertdb))
@@ -269,7 +292,25 @@ $invoice_id=$invoice_id_tstmp.$invoice_id_tstmp1.("786").rand(1,78699);
 
 
  	//INSERT INTO `inv_orders`(`order_sl`, `inv_id`, `Inv_cartno`, `sl`, `item_name`, `item_price`, `item_quantity`, `item_total`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8])
- // }
+ }
+
+// for ($i=0; $i < $count; $i++) { 
+// 	// if (!empty($_SESSION['cart'][$i])) {
+// 		echo "count =".$count;
+// 		echo "$i =".$i;
+// 		foreach ($_SESSION['cart'][$i] as $key => $value) {
+// 		$k[]= $key;
+// 		$v[]= " '".$value. "' ";
+// 		}
+// 		$k=implode(", ", $k);
+// 		$v=implode(", ", $v);
+// 		echo " $k= ".$k."  |  $v= ".$v." ";
+// 		pre_r($k);
+
+// 		pre_r($v);
+// 	 }
+
+	// }
 
 
 
@@ -282,7 +323,7 @@ $connect= mysqli_connect("localhost", "root", "","foodpark");
 
 		 $count= count($_SESSION['cart']);
 			// echo "count =".$count;
-			 for ($i=0; $i <=$count ; $i++) { 
+			 for ($i=0; $i <$count ; $i++) { 
 			 	$inv_cartno=$i+1;
 			 	$inv_id=$invoice_id;
 			 	$sl =$_SESSION['cart'][$i]['sl'];
@@ -291,10 +332,18 @@ $connect= mysqli_connect("localhost", "root", "","foodpark");
 			 	$item_quantity=$_SESSION['cart'][$i]['item_quantity'];
 			 	$item_itotal=($_SESSION['cart'][$i]['item_price']*$_SESSION['cart'][$i]['item_quantity']);
 			 	$item_total=$item_itotal;
-			 	// echo "  ||  ";
-			 	// //echo " invoice_id ".$inv_id."  NO. ".$inv_cartno."  sl:  ".$sl." Name : ".$inv_itname."  Price : ".$inv_itemprice."  Quantity : ".$inv_itemquantity."  Total: ".$item_total;
+			 	echo "  ||  ";
+			 	echo " invoice_id ".$inv_id."  NO. ".$inv_cartno."  sl:  ".$sl." Name : ".$inv_itname."  Price : ".$inv_itemprice."  Quantity : ".$inv_itemquantity."  Total: ".$item_total;
 
-			 	// echo "  ||  ";
+			 	echo "  ||  ";
+
+							// $inv_id= mysqli_real_escape_string($connect,$invoice_id);
+							// $sl= mysqli_real_escape_string($connect,$sl);
+							// $item_name= mysqli_real_escape_string($connect,$item_name);
+							// $item_price= mysqli_real_escape_string($connect,$item_price);
+							// $item_quantity= mysqli_real_escape_string($connect,$item_quantity);
+							// $item_total= mysqli_real_escape_string($connect,$item_total);
+
 
 							$insertdb="INSERT INTO inv_orders(inv_id, inv_cartno, sl, item_name, item_price, item_quantity, item_total)VALUES('$inv_id', '$inv_cartno', '$sl', '$item_name', '$item_price', '$item_quantity', '$item_total')";
 							if(mysqli_query($connect, $insertdb))
@@ -304,44 +353,152 @@ $connect= mysqli_connect("localhost", "root", "","foodpark");
 							  else {
 							    echo "<h1>Order DB NOT inserted! ! ! Error!!</h1>";
 							  }
+
+
+			 	//INSERT INTO `inv_orders`(`order_sl`, `inv_id`, `Inv_cartno`, `sl`, `item_name`, `item_price`, `item_quantity`, `item_total`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8])
 			 }
 
-			 //========================Invoice Table Udate code OK=======================
+	}
+		//   // =================Order items list as array=======================
+		// $connect= mysqli_connect("localhost", "root", "","foodpark");
+		// $inv_id= mysqli_real_escape_string($connect,($_POST['inv_id']));
+
+  //     $count= count($_SESSION['cart']);
+  //     for ($i=0; $i <= $count ; $i++) { 
+  //     	foreach ($_SESSION['cart'][$i] as $key => $value) {
+  //     		$sl = $value['sl'];
+  //     		$item_name= $value['item_name'];
+  //     		$item_price= $value['item_price'];
+  //     		$item_quantity= $value['item_quantity'];
+  //     		$insertdb="INSERT INTO inv_orders(sl,item_name,item_price,item_quantity)VALUES ('$sl','$item_name','item_price','item_quantity')";
+		// 		mysqli_query($connect, $insertdb);
+				  
+  //     	}
+  //     }
+		  // =================Order items list as array=======================
+				
+				// error_reporting(0);
+
+				//$inv_id= mysqli_real_escape_string($connect,($_POST['inv_id']));
+				// for ($i=0; $i < 40 ; $i++) { 
+				// 	foreach ($_SESSION['cart'][$i] as $key => $value) {
+				// 		//$k[]= $key;
+				// 		$v[]= "'".$value. "'";
+				// 	}
+				// 	//$i=$i++;
+					
+				// }
+				// //$k=implode(", ", $k);
+				// $v=implode(", ", $v);
+				// foreach ($_SESSION['cart'][0] as $key => $value) {
+				// $k[]= $key;
+				// //$v[]= " '".$value. "' ";
+				// }
+				// $k=implode(", ", $k);
+				
+
+				// pre_r($k);
+
+				// pre_r($v);
+
+
+				// $insertdb="INSERT INTO inv_orders($k)VALUES ($v)";
+				// if(mysqli_query($connect, $insertdb))
+				//   {
+				//   echo "<h1>Order DB inserted successfully..!</h1>";
+				//   }
+				//   else {
+				//     echo "<h1>Order DB NOT inserted! ! ! Error!!</h1>";
+				//   }
+
+				//INSERT INTO `inv_orders`(`order_sl`, `inv_id`, `sl`, `item_name`, `item_price`, `item_quantity`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6])
+
+
+		  // =================Order items list as array=======================
+	
+
+
+
+
+
+
+
+		//   if(!empty($_SESSION["cart"])){
+		//   	$cartno=1;
+		// 	foreach ($_SESSION["cart"] as $key => $value){
+				                        	
+		// 		//$inv_cartno= $cartno;
+		// 		//$productid = mysql_real_escape_string($values['product_id']);
+		// 		$inv_id= mysqli_real_escape_string($connect,$inv_id);
+		// 		$inv_cartno= mysqli_real_escape_string($connect,$cartno);
+		// 		//$inv_sl= $value['sl'];
+		// 		$inv_sl= mysqli_real_escape_string($connect,[$value]['sl']);
+		// 		$inv_itemname= mysqli_real_escape_string($connect,[$value]['item_name']);
+		// 		$inv_itemprice= mysqli_real_escape_string($connect,[$value]['item_price']);
+		// 		$inv_itemquantity= mysqli_real_escape_string($connect,[$value]['item_quantity']);
+				
+		// 		$inv_itotal=number_format(($value['item_quantity']*$value['item_price']), 2);
+		// 		$inv_itemtotal= mysqli_real_escape_string($connect,$inv_itotal);
+				
+		// 		// $inv_itemname= $value['item_name'];
+		// 		// $inv_itemprice= $value['item_price'];
+		// 		// $inv_itemquantity = $value['item_quantity'];
+		// 		// $inv_itemtotal= number_format(($value['item_quantity']*$value['item_price']), 2);
+
+
+		// 		$insertdb="INSERT INTO inv_orders(inv_id,inv_cartno,inv_sl,inv_itemname,inv_itemprice,inv_itemquantity,inv_itemtotal) VALUES ('".$inv_id."','".$inv_cartno."','".$inv_sl."','".$inv_itemname."','".$inv_itemprice."','".$inv_itemquantity."','".$inv_itemtotal."')";
+		// 		mysqli_query($connect,$insertdb);
+
+		// 		$cartno=$cartno+1;
+
+		// 		if(mysqli_query($connect, $insertdb))
+		// 		  {
+		// 		  echo "<h1>Order DB inserted successfully..!</h1>";
+		// 		  }
+		// 		  else {
+		// 		    echo "<h1>Order DB NOT inserted! ! ! Error!!</h1>";
+		// 		  }
+
+		// 		//INSERT INTO `inv_orders`(`order_id`, `inv_id`, `inv_cartno`, `inv_sl`, `inv_itemname`, `inv_itemprice`, `inv_itemquantity`, `inv_itemtotal`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8])
+		// 	}
+		// }
+		  // =================Order items list as array=======================
+
+
+//========================Invoice Table Udate code OK=======================
  	 	// $inv_id=mysqli_real_escape_string($connect,($_POST['inv_id']));
- 	 	$inv_id=$invoice_id;
- 	 	$inv_time=mysqli_real_escape_string($connect,($_POST['inv_time']));
- 	 	$inv_date=mysqli_real_escape_string($connect,($_POST['inv_date']));
- 	 	$inv_name=mysqli_real_escape_string($connect,($_POST['inv_name']));
- 	 	$inv_email=mysqli_real_escape_string($connect,($_POST['inv_email']));
- 	 	$inv_mobile=mysqli_real_escape_string($connect,($_POST['inv_mobile']));
- 	 	$inv_address=mysqli_real_escape_string($connect,($_POST['inv_address']));
- 	 	$inv_destaddress=mysqli_real_escape_string($connect,($_POST['inv_destaddress']));
- 	 	$inv_shippingcharge = mysqli_real_escape_string($connect,($_POST['inv_shippingcharge']));
- 	 	$inv_grandtotal=mysqli_real_escape_string($connect,($_POST['inv_grandtotal']));
- 	 	$inv_inwords=mysqli_real_escape_string($connect,($_POST['inv_inwords']));
- 	 	$inv_total=mysqli_real_escape_string($connect,($_POST['inv_total']));
- 	 	$inv_vat=mysqli_real_escape_string($connect,($_POST['inv_vat']));
+ 	 	// $inv_time=mysqli_real_escape_string($connect,($_POST['inv_time']));
+ 	 	// $inv_date=mysqli_real_escape_string($connect,($_POST['inv_date']));
+ 	 	// $inv_name=mysqli_real_escape_string($connect,($_POST['inv_name']));
+ 	 	// $inv_email=mysqli_real_escape_string($connect,($_POST['inv_email']));
+ 	 	// $inv_mobile=mysqli_real_escape_string($connect,($_POST['inv_mobile']));
+ 	 	// $inv_address=mysqli_real_escape_string($connect,($_POST['inv_address']));
+ 	 	// $inv_destaddress=mysqli_real_escape_string($connect,($_POST['inv_destaddress']));
+ 	 	// $inv_shippingcharge = mysqli_real_escape_string($connect,($_POST['inv_shippingcharge']));
+ 	 	// $inv_grandtotal=mysqli_real_escape_string($connect,($_POST['inv_grandtotal']));
+ 	 	// $inv_inwords=mysqli_real_escape_string($connect,($_POST['inv_inwords']));
+ 	 	// $inv_total=mysqli_real_escape_string($connect,($_POST['inv_total']));
+ 	 	// $inv_vat=mysqli_real_escape_string($connect,($_POST['inv_vat']));
 
 
- 	 	$insertdb="INSERT INTO invoice(inv_id,inv_time,inv_date,inv_name,inv_email,inv_mobile,inv_address,inv_destaddress,inv_total,inv_shippingcharge,inv_vat,inv_grandtotal,inv_inwords) VALUES ('$inv_id','$inv_time','$inv_date','$inv_name','$inv_email','$inv_mobile','$inv_address','$inv_destaddress','$inv_total','$inv_shippingcharge','$inv_vat', '$inv_grandtotal','$inv_inwords')";
- 	 	if(mysqli_query($connect, $insertdb))
-		  {
-		  echo "<h1>INVOICE DB inserted successfully..!</h1>";
-		  $_SESSION['invoice_id']=$invoice_id;
-				header("location: invoicesuccess.php");
-
-		  echo '<script>window.location="index.php")</script>';
-		  }
-		  else {
-		    echo "<h1>INVOICE DB NOT inserted! ! ! Error!!</h1>";
-		  }
+ 	 	// $insertdb="INSERT INTO invoice(inv_id,inv_time,inv_date,inv_name,inv_email,inv_mobile,inv_address,inv_destaddress,inv_total,inv_shippingcharge,inv_vat,inv_grandtotal,inv_inwords) VALUES ('$inv_id','$inv_time','$inv_date','$inv_name','$inv_email','$inv_mobile','$inv_address','$inv_destaddress','$inv_total','$inv_shippingcharge','$inv_vat', '$inv_grandtotal','$inv_inwords')";
+ 	 	// if(mysqli_query($connect, $insertdb))
+		  // {
+		  // echo "<h1>INVOICE DB inserted successfully..!</h1>";
+		  // }
+		  // else {
+		  //   echo "<h1>INVOICE DB NOT inserted! ! ! Error!!</h1>";
+		  // }
 
 
 //========================Invoice Table Udate code OK=======================
 
-
-	}
 		
+		  
+
+		  
+	// --------------------------------------------------------------------------------------------------
+// }
  ?>
 
 <!-- ========================================================================================================================== -->
