@@ -208,13 +208,13 @@ error_reporting(0);
 
 
 <?php //Check array
-pre_r($_SESSION);
+// pre_r($_SESSION);
 
-function pre_r($array){
-  echo "<pre>";
-  print_r($array);
-  echo "</pre>";
-}
+// function pre_r($array){
+//   echo "<pre>";
+//   print_r($array);
+//   echo "</pre>";
+// }
 
 
 // pre_r($_SESSION['cart'][1]['item_name']);
@@ -273,7 +273,8 @@ $invoice_id=$invoice_id_tstmp.$invoice_id_tstmp1.("786").rand(1,78699);
 
 
 
-$connect= mysqli_connect("localhost", "root", "","foodpark");
+include 'dbconfig.php';//connect info to database 
+
 
 //eNTERING INVOICE DATA
 	if(isset($_POST['submit']))
