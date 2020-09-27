@@ -2,7 +2,7 @@
 
 <?php 
 
-//edit get value
+//edit get sl value
  if (isset($_GET["action"])) {
     if ($_GET["action"]=="edit") {
     	$_SESSION['edit_sl']=$_GET['id'];
@@ -229,7 +229,7 @@ if(isset($_POST['submit']))
 	<!-- ---------------------------------------Items Input form ------------------------------------------------------------ -->
 
 
-	<!-- ---------------------------------------Ttems display form------------------------------------------------- -->
+	<!-- ---------------------------------------Ttems display Tables------------------------------------------------- -->
 		<div class="col-md-8   p-1 ">
 			<div class="border border-warning m-1">
 				<table class="table table-responsive table-hover table-secondary">
@@ -248,7 +248,7 @@ if(isset($_POST['submit']))
                         <!-- Get Data Table -->
                            <?php include 'dbconfig.php';//connect info to database ?>
                             <?php 
-                            	$query= "SELECT*FROM item ORDER BY sl ASC";
+                            	$query= "SELECT*FROM item ORDER BY item_name ASC";
 					            $result= mysqli_query($con, $query);
 					            $num_rows=mysqli_num_rows($result);
 					            $i=1;

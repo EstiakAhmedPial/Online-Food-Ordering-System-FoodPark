@@ -36,7 +36,8 @@
  	</div>
  	<div class="row">
  		<!-- ===================================Orders BOX ==================================== -->
-					<div class="col-md-4 card border-warning text-center m-1 p-2" style="width: 80%; height: 20%;  ">
+					
+          <div class="col-md-4 card border-warning text-center m-1 p-2" style="width: 80%; height: 20%;  ">
                           <!-- <img src=" " class="card-img-top" alt="..." style="height: 180px;"> -->
                           <div class="card-body p-1">
                             <h1 class="card-title text-warning"> ORDERS </h1>
@@ -66,14 +67,15 @@
                             <span class="badge badge-danger"></span>
 
                            	<?php 
-                            	$query= 'SELECT*FROM invoice ORDER by id ';
+                            $d='NULL';
+                            	$query= "SELECT*FROM invoice WHERE inv_delivery= 'on the way'";
 					            $result= mysqli_query($con, $query);
 					            $num_rows=mysqli_num_rows($result);
 
 
 					             ?>
 
-                            <h4 class="card-text font-weight-lighter text-danger">Number of Pending Orders</h4>
+                            <h4 class="card-text font-weight-lighter text-danger">Number of Orders On the way</h4>
                             <p class="card-text font-weight-lighter display-3 text-danger"><?php echo $num_rows; ?></p>
 
                             
@@ -84,6 +86,33 @@
                           </div>
                         </div>
  		<!-- ===================================Pending Order  ==================================== -->
+    <!-- =================================== Pending Orders BOX ==================================== -->
+          <div class="col-md-4 card border-warning text-center m-1 p-2" style="width: 80%; height: 20%;  ">
+                          <!-- <img src=" " class="card-img-top" alt="..." style="height: 180px;"> -->
+                          <div class="card-body p-1">
+                            <h1 class="card-title text-danger"> ORDERS DONE</h1>
+                            <span class="badge badge-danger"></span>
+
+                            <?php 
+                            $d='NULL';
+                              $query= "SELECT*FROM invoice WHERE inv_delivery= 'done'";
+                      $result= mysqli_query($con, $query);
+                      $num_rows=mysqli_num_rows($result);
+
+
+                       ?>
+
+                            <h4 class="card-text font-weight-lighter text-danger">Number of Orders Done</h4>
+                            <p class="card-text font-weight-lighter display-3 text-danger"><?php echo $num_rows; ?></p>
+
+                            
+                            <!-- Submit Button -->
+                            <!-- <input type="submit" name="order" class="btn btn-warning text-white" value="Order it" style="margin: 8px;"> -->
+
+                            
+                          </div>
+                        </div>
+    <!-- ===================================Pending Order  ==================================== -->
  		<!-- ===================================Items  ==================================== -->
 					<div class="col-md-4 card border-warning text-center m-1 p-2" style="width: 80%; height: 20%;  ">
                           <!-- <img src=" " class="card-img-top" alt="..." style="height: 180px;"> -->
